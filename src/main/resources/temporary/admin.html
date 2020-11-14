@@ -1,0 +1,20 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Hello Admin</h1>
+<center>
+    <div>
+        <h2 th:text="'Hello ' + ${user.role} + '!'"></h2>
+        <p>Your password <span th:text="${user.password}"></span></p>
+        <p>Your login <span th:text="${user.login}"></span></p>
+        <p>Your age <span th:text="${user.age}"></span></p>
+        <p>Your city <span th:text="${user.city}"></span></p>
+        <p>Your birthday <span th:text="${user.birthday}"></span></p>
+    </div>
+</center>
+</body>
+</html>
