@@ -5,16 +5,19 @@
     <title>Title</title>
 </head>
 <body>
-<h2 th:text=" ${question} + '?'"></h2>
-<form action="/answer2" method="post">
-    <div align="center">
-        <p><input name="answer" type="radio" value="true" size="10">true</p>
-        <p><input name="answer" type="radio" value="false" size="10">false</p>
 
-        <p><input type="submit" name="next"></p>
-    </div>
+<form action="/answer2" method="post">
+    <h2 th:text=" ${question} + '?'"></h2>
+    <ol>
+        <li><input name="answer" type="radio" value="div, a, b, pre, li"> div, a, b, pre, li</li>
+        <li><input name="answer" type="radio" value="p, img, html"> p, img, html</li>
+        <li><input name="answer" type="radio" value="div, p, ul, ol"> div, p, ul, ol</li>
+        <li><input name="answer" type="radio" value="a, b, c, div, li"> a, b, c, div, li</li>
+        <li><input name="answer" type="radio" value="p, div, b, pre, li"> p, div, b, pre, li</li>
+    </ol>
+
+    <input type="submit" value="next">
 </form>
 
-</div>
 </body>
 </html>

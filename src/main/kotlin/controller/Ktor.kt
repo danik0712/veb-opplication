@@ -15,6 +15,13 @@ fun main() {
 
     val server = embeddedServer(Netty, port = 9090) {
 
+        val question1: String = "What is tag use for new line with space?"
+        val question2: String = "Whats tags block?"
+
+        var person = Person(name = null, age = null)
+        var result = "0%"
+        val answers: MutableList<Answer> = mutableListOf()
+
         routing {
 
             install(Thymeleaf) {
@@ -27,8 +34,54 @@ fun main() {
                 )
             }
 
-            get("/") {
-                call.respondFile(File("./src/main/resources/pages/sign.html"))
+            get("/") { call.respondFile(File("./src/main/resources/pages/main.html")) }
+
+            post("/main") {
+                val parameters = call.receiveParameters()
+                val name = parameters["name"].toString()
+                val age = parameters["age"].toString()
+                person = Person(name = name, age = age)
+                call.respond(ThymeleafContent("question1", mapOf("question" to question1)))
+            }
+
+            post("/answer1") {
+
+                val parameters = call.receiveParameters()
+                val answer = parameters["answer"].toString()
+
+                answers.add(
+                        Answer(
+                                numberQuestion = "1",
+                                answerCurrent = answer,
+                                correctAnswer = "p",
+                                question = question1)
+                )
+
+                call.respond(ThymeleafContent("question2", mapOf("question" to question2)))
+            }
+
+            post("/answer2") {
+
+                val parameters = call.receiveParameters()
+                val answer = parameters["answer"].toString()
+
+                answers.add(
+                        Answer(
+                                numberQuestion = "2",
+                                answerCurrent = answer,
+                                correctAnswer = "div, p, ul, ol",
+                                question = question2
+                        )
+
+                )
+
+                call.respond(
+                        ThymeleafContent("end",
+                                mapOf("user" to person, "answer" to answers, "result" to getResult(answers)))
+                )
+
+                answers.clear()
+
             }
 
             post("/sign") {
@@ -45,9 +98,7 @@ fun main() {
 
             }
 
-            get("/reg") {
-                call.respondFile(File("./src/main/resources/pages/registr.html"))
-            }
+            //get("/reg") { call.respondFile(File("./src/main/resources/pages/registr.html")) }
 
             post("/data") {
 
@@ -74,41 +125,19 @@ fun main() {
                 call.respond(ThymeleafContent("user", mapOf("user" to user)))
             }
 
-            get("/question1") {
-                val question = "What tag use for string with new string"
-                call.respond(ThymeleafContent("question1", mapOf("question" to question)))
-            }
-
-            val answers: HashMap<String, MutableMap<Answer, AnswerUser>> = hashMapOf ()
-
-            post("/answer1") {
-                val answer = call.receiveParameters()["answer"].toString()
-
-                val question = "What tag use for string with new string"
-
-                val correctAnswer = Answer("p")
-                val answerUser = AnswerUser(answer)
-
-              //  answers.put(question, hashMapOf(correctAnswer, answerUser))
-
-                val nextQuestion = "HTML it's language programming"
-                call.respond(ThymeleafContent("question2", mapOf("question" to nextQuestion)))
-            }
-
-            post("/answer2") {
-
-                val temp = call.receiveParameters()["answer2"].toString()
-                val answer = Answer(temp)
-
-                val question = "HTML it's language programming"
-
-                // ans[Answer("false")] = answer
-
-                call.respondText { "$answers" }
-            }
 
         }
     }
     server.start(wait = true)
 }
 
+private fun getResult(answers: MutableList<Answer>): String {
+    val size = answers.size
+    var countTrue = 0.0f;
+
+    answers.forEach { if (it.answerCurrent == it.correctAnswer) countTrue++ }
+
+    val temp: Double = if (countTrue != 0.0f) (countTrue / size).toDouble() * 100 else 0.0
+
+    return "$temp%"
+}

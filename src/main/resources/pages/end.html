@@ -1,0 +1,77 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .styled-table {
+            margin-left: auto;
+            margin-right: auto;
+            align-content: center;
+            border-collapse: collapse;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+            text-align: center;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+    </style>
+</head>
+<body>
+
+<h2 th:text=" ${user.name}" align="center"></h2>
+
+<table border="1" class="styled-table">
+    <thead>
+    <tr>
+        <th>Number question</th>
+        <th>Question</th>
+        <th>Your answer</th>
+        <th>Correct answer</th>
+    </tr>
+    </thead>
+
+    <tbody style="background:lightgoldenrodyellow">
+
+    <tr th:each="answer : ${answer}">
+        <td><div th:text="${answer.numberQuestion}"></div></td>
+        <td><div th:text="${answer.question}"></div></td>
+        <td><div th:text="${answer.answerCurrent}"></div></td>
+        <td><div th:text="${answer.correctAnswer}"></div></td>
+    </tr>
+
+    </tbody>
+
+    <tfoot style="background:tomato">
+    <tr align="center">
+        <th colspan="2">Результат</th>
+        <td colspan="2">
+            <div th:text="${result}"></div>
+        </td>
+    </tr>
+    </tfoot>
+
+</table>
+
+</body>
+</html>

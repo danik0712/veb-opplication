@@ -2,14 +2,14 @@ package model
 
 import kotlin.collections.HashMap
 
-
-data class Answer(
-        val answer: String
+class Answer(
+        val numberQuestion: String,
+        val answerCurrent: String,
+        val correctAnswer: String,
+        val question: String
 )
 
-data class AnswerUser(
-        val answer: String
-)
+data class AnswerUser(val answer: String)
 
 enum class Role {
     USER,
@@ -36,13 +36,11 @@ data class User(
 
 )
 
-data class Statistic(
-        val name: HashMap<Answer, Answer>
-)
+data class Person(val name: String?, val age: String?)
 
-interface Position {
-    val role: String
-}
+data class Statistic(val name: HashMap<Answer, Answer>)
+
+interface Position { val role: String }
 
 fun setPlayer(login: String, password: String) = Player(
         login = login,
