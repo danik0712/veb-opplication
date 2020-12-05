@@ -15,11 +15,11 @@ fun main() {
 
     val server = embeddedServer(Netty, port = 9090) {
 
-        val question1: String = "What is tag use for new line with space?"
-        val question2: String = "Whats tags block?"
+        val question1 = "What is tag use for new line with space?"
+        val question2 = "Whats tags block?"
 
         var person = Person(name = null, age = null)
-        var result = "0%"
+
         val answers: MutableList<Answer> = mutableListOf()
 
         routing {
@@ -34,8 +34,12 @@ fun main() {
                 )
             }
 
-            get("/") { call.respondFile(File("./src/main/resources/pages/main.html")) }
+            //открывает эту страницу первую в приложении
+            get("/") {
+                call.respondFile(File("./src/main/resources/pages/question1.html"))
+            }
 
+            //код не трогаем
             post("/main") {
                 val parameters = call.receiveParameters()
                 val name = parameters["name"].toString()
@@ -54,7 +58,8 @@ fun main() {
                                 numberQuestion = "1",
                                 answerCurrent = answer,
                                 correctAnswer = "p",
-                                question = question1)
+                                question = question1
+                        )
                 )
 
                 call.respond(ThymeleafContent("question2", mapOf("question" to question2)))
@@ -65,15 +70,7 @@ fun main() {
                 val parameters = call.receiveParameters()
                 val answer = parameters["answer"].toString()
 
-                answers.add(
-                        Answer(
-                                numberQuestion = "2",
-                                answerCurrent = answer,
-                                correctAnswer = "div, p, ul, ol",
-                                question = question2
-                        )
-
-                )
+                answers.add(Answer(numberQuestion = "2", answerCurrent = answer, correctAnswer = "div, p, ul, ol", question = question2))
 
                 call.respond(
                         ThymeleafContent("end",
@@ -125,6 +122,10 @@ fun main() {
                 call.respond(ThymeleafContent("user", mapOf("user" to user)))
             }
 
+
+            post("/answer4") {
+                val parameters = call.receiveParameters()
+            }
 
         }
     }

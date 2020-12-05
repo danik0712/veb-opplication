@@ -5,14 +5,23 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <style>
+      div{
+          margin-top: 20px;
+      }
+  </style>
 
 </head>
 <body>
 
-<div align="center" class="html-editor">
-    <form action="/main" method="post" class="color-input-field">
-        <p class="form-group"><input type="text" name="name" placeholder="Как вас зовут?"></p>
-        <p class="form-group"><input type="text" name="age" placeholder="Сколько вам лет?"></p>
+<div align="center" >
+    <form action="/main" method="post" >
+        <p class="form-group">
+            <input type="text" name="name" placeholder="Как вас зовут?" class="color-input-field" required>
+        </p>
+        <p class="form-group">
+            <input type="text" name="age" placeholder="Сколько вам лет?" class="color-input-field" required>
+        </p>
 
         <input type="submit" value="Начать тест" class="btn btn-primary">
     </form>

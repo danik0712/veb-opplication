@@ -3,21 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <style>
+        .list {
+            margin-left: 40%;
+            margin-bottom: 5%;
+        }
+
+        .button {
+            margin-left: 45%;
+        }
+
+    </style>
 </head>
 <body>
+<h1 th:text=" ${question} + '?'" align="center"></h1>
 
-<form action="/answer2" method="post">
-    <h2 th:text=" ${question} + '?'"></h2>
-    <ol>
-        <li><input name="answer" type="radio" value="div, a, b, pre, li"> div, a, b, pre, li</li>
-        <li><input name="answer" type="radio" value="p, img, html"> p, img, html</li>
-        <li><input name="answer" type="radio" value="div, p, ul, ol"> div, p, ul, ol</li>
-        <li><input name="answer" type="radio" value="a, b, c, div, li"> a, b, c, div, li</li>
-        <li><input name="answer" type="radio" value="p, div, b, pre, li"> p, div, b, pre, li</li>
-    </ol>
+<div>
+    <form action="/answer2" method="post">
+        <div class="list">
+            <ol>
+                <li><p><input name="answer" type="radio" value="div, a, b, pre, li"> div, a, b, pre, li</p></li>
+                <li><p><input name="answer" type="radio" value="p, img, html"> p, img, html</p></li>
+                <li><p><input name="answer" type="radio" value="div, p, ul, ol"> div, p, ul, ol</p></li>
+                <li><p><input name="answer" type="radio" value="a, b, c, div, li"> a, b, c, div, li</p></li>
+                <li><p><input name="answer" type="radio" value="p, div, b, pre, li"> p, div, b, pre, li</p></li>
+            </ol>
+        </div>
 
-    <input type="submit" value="next">
-</form>
+        <div class="button">
+            <input type="submit" value="next" class="btn btn-primary" align="center">
+        </div>
+
+    </form>
+</div>
 
 </body>
 </html>

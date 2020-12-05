@@ -42,35 +42,13 @@
 <h2 th:text=" ${user.name}" align="center"></h2>
 
 <table border="1" class="styled-table">
-    <thead>
-    <tr>
-        <th>Number question</th>
-        <th>Question</th>
-        <th>Your answer</th>
-        <th>Correct answer</th>
-    </tr>
-    </thead>
-
     <tbody style="background:lightgoldenrodyellow">
 
-    <tr th:each="answer : ${answer}">
-        <td><div th:text="${answer.numberQuestion}"></div></td>
-        <td><div th:text="${answer.question}"></div></td>
-        <td><div th:text="${answer.answerCurrent}"></div></td>
-        <td><div th:text="${answer.correctAnswer}"></div></td>
+    <tr th:each="answer : ${game.area}">
+        <td th:each="answer : ${answer}"></td>
     </tr>
 
     </tbody>
-
-    <tfoot style="background:tomato">
-    <tr align="center">
-        <th colspan="2">Результат</th>
-        <td colspan="2">
-            <div th:text="${result}"></div>
-        </td>
-    </tr>
-    </tfoot>
-
 </table>
 
 </body>
