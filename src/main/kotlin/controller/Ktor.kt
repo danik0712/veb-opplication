@@ -36,8 +36,22 @@ fun main() {
 
             //открывает эту страницу первую в приложении
             get("/") {
-                call.respondFile(File("./src/main/resources/pages/question1.html"))
+            //    call.respondFile(File("./src/main/resources/pages/sign.html"))
+                call.respondFile(File("./src/main/resources/pages/Test.html"))
+
+
+
             }
+
+         post("/submitData"){
+                //call.respondFile(File("./src/main/resources/pages/TABLE.html"))
+            val parameters = call.receiveParameters()
+            val date =  parameters["email"].toString()
+
+             call.respondText { date }
+
+            }
+
 
             //код не трогаем
             post("/main") {
