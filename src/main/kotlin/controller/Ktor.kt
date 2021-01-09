@@ -13,10 +13,26 @@ import java.io.File
 
 fun main() {
 
+    fun getResult(answers: MutableList<Answer>): String {
+        val size = answers.size
+        var countTrue = 0.0f
+
+        answers.forEach { if (it.answerCurrent == it.correctAnswer) countTrue++ }
+
+        val temp = if (countTrue != 0.0f) (countTrue / size).toDouble() * 100 else 0.0
+
+        if (temp > 60 && temp < 80) return "Not bad, but you can better $temp%"
+
+        if (temp > 80) return "Excellent, continue in this pace $temp%"
+
+        return "You need more hard work $temp%"
+    }
+
     val server = embeddedServer(Netty, port = 9090) {
 
-        val question1 = "What is tag use for new line with space?"
-        val question2 = "Whats tags block?"
+        val question1 = "whats tag block?"
+        val question2 = "С помощью какого тега следует разделять абзацы?"
+        val question3 = "С помощью какого свойства изменяется ширина таблицы?"
 
         var person = Person(name = null, age = null)
 
@@ -36,24 +52,9 @@ fun main() {
 
             //открывает эту страницу первую в приложении
             get("/") {
-            //    call.respondFile(File("./src/main/resources/pages/sign.html"))
-                call.respondFile(File("./src/main/resources/pages/Test.html"))
-
-
-
+                call.respondFile(File("./src/main/resources/pages/start.html"))
             }
 
-         post("/submitData"){
-                //call.respondFile(File("./src/main/resources/pages/TABLE.html"))
-            val parameters = call.receiveParameters()
-            val date =  parameters["email"].toString()
-
-             call.respondText { date }
-
-            }
-
-
-            //код не трогаем
             post("/main") {
                 val parameters = call.receiveParameters()
                 val name = parameters["name"].toString()
@@ -63,7 +64,6 @@ fun main() {
             }
 
             post("/answer1") {
-
                 val parameters = call.receiveParameters()
                 val answer = parameters["answer"].toString()
 
@@ -71,7 +71,7 @@ fun main() {
                         Answer(
                                 numberQuestion = "1",
                                 answerCurrent = answer,
-                                correctAnswer = "p",
+                                correctAnswer = "post",
                                 question = question1
                         )
                 )
@@ -84,7 +84,19 @@ fun main() {
                 val parameters = call.receiveParameters()
                 val answer = parameters["answer"].toString()
 
-                answers.add(Answer(numberQuestion = "2", answerCurrent = answer, correctAnswer = "div, p, ul, ol", question = question2))
+                answers.add(Answer(numberQuestion = "2", answerCurrent = answer, correctAnswer = "p", question = question2))
+
+                call.respond(ThymeleafContent("question3", mapOf("question" to question3)))
+
+            }
+
+
+            post("/answer3") {
+                val parameters = call.receiveParameters()
+
+                val answer = parameters["answer"].toString()
+
+                answers.add(Answer(numberQuestion = "3", answerCurrent = answer, correctAnswer = "width", question = question2))
 
                 call.respond(
                         ThymeleafContent("end",
@@ -92,53 +104,6 @@ fun main() {
                 )
 
                 answers.clear()
-
-            }
-
-            post("/sign") {
-                val parameters = call.receiveParameters()
-
-                val password = parameters["password"].toString()
-                val login = parameters["login"].toString()
-
-                val user = setPlayer(login = login, password = password)
-
-                val foundedPlayer = users.single { it.role.name == user.role }
-
-                call.respond(ThymeleafContent("user", mapOf("user" to foundedPlayer)))
-
-            }
-
-            //get("/reg") { call.respondFile(File("./src/main/resources/pages/registr.html")) }
-
-            post("/data") {
-
-                val parameters = call.receiveParameters()
-
-                val name = parameters["name"].toString()
-                val password = parameters["password"].toString()
-                val login = parameters["login"].toString()
-                val city = parameters["city"].toString()
-                val birthday = parameters["birthday"].toString()
-                val age = parameters["age"].toString()
-                val role = parameters["role"].toString()
-
-                val user = User(
-                        name = name,
-                        password = password,
-                        age = age,
-                        city = city,
-                        birthday = birthday,
-                        login = login,
-                        role = Role.valueOf(role)
-                )
-
-                call.respond(ThymeleafContent("user", mapOf("user" to user)))
-            }
-
-
-            post("/answer4") {
-                val parameters = call.receiveParameters()
             }
 
         }
